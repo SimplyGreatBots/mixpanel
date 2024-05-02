@@ -14,8 +14,6 @@ export default new botpress.Integration({
     updateUserProfile: async (args): Promise<updateUserProfileOutput> => {
       args.logger.forBot().info('Updating User Profile', args.input.userProfile)
       
-      const mixpanel = mixpanelClient.init(args.ctx.configuration.token);
-
       let traits = {};
 
       try {
@@ -35,7 +33,7 @@ export default new botpress.Integration({
           {
             $token: args.ctx.configuration.token,
             $distinct_id: args.input.userId,
-            $set: traits
+            $set: traits,
           }
         ]
       }
