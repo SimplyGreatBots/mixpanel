@@ -1,0 +1,28 @@
+{
+  "name": "mixpanel",
+  "integrationName": "simplygreatanalytics/mixpanel",
+  "scripts": {
+    "type:check": "tsc --noEmit",
+    "version": "bp --version",
+    "login": "bp login",
+    "dev": "bp dev",
+    "gen": "bp gen",
+    "deploy": "bp deploy"
+  },
+  "keywords": [],
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@botpress/client": "0.15.0",
+    "@botpress/sdk": "0.8.5",
+    "axios": "^1.6.8",
+    "mixpanel": "^0.18.0"
+  },
+  "devDependencies": {
+    "@botpress/cli": "^0.8.7",
+    "@types/node": "^18.19.31",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  }
+}
