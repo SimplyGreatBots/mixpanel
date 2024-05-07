@@ -1,12 +1,11 @@
 import { IntegrationDefinition, z } from '@botpress/sdk'
-import { name, integrationName } from './package.json'
 
 export default new IntegrationDefinition({
-  name: integrationName ?? name,
-  title: 'Mixpanel',
-  description: 'Integrate Mixpanel with Botpress',
+  name: 'plus/mixpanel',
+  title: "Mixpanel",
+  description: 'Track Botpress Analytics events in Mixpanel',
   icon: 'logo.svg',
-  version: '0.2.2',
+  version: '0.2.3',
   readme: 'hub.md',
   configuration: {
     schema: z.object({
@@ -25,8 +24,7 @@ export default new IntegrationDefinition({
       },
       output: {
         schema: z.object({
-          success: z.boolean().describe('Whether the user profile was successfully updated'),
-          log: z.string().describe('Log message'),
+         
         })
       },
     },    
@@ -42,8 +40,7 @@ export default new IntegrationDefinition({
       },
       output: {
         schema: z.object({
-          success: z.boolean().describe('Whether the event was successfully tracked'),
-          log: z.string().describe('Log message'),
+         
         })
       },
     },
