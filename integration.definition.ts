@@ -3,9 +3,9 @@ import { IntegrationDefinition, z } from '@botpress/sdk'
 export default new IntegrationDefinition({
   name: 'plus/mixpanel',
   title: "Mixpanel",
-  description: 'Integrate Mixpanel with Botpress',
+  description: 'Track Botpress Analytics events in Mixpanel',
   icon: 'logo.svg',
-  version: '0.2.2',
+  version: '0.2.3',
   readme: 'hub.md',
   configuration: {
     schema: z.object({
