@@ -1,15 +1,52 @@
 import * as botpress from '.botpress'
 import axios from 'axios'
 import Mixpanel from 'mixpanel';
+import * as bpclient from "@botpress/client";
 
 type updateUserProfileOutput = botpress.actions.updateUserProfile.output.Output
 type trackEventOutput = botpress.actions.trackEvent.output.Output
 
 export default new botpress.Integration({
-  register: async () => {
+  register: async ({ ctx }) => {
+    if (!ctx.configuration.token) {
+      throw new bpclient.RuntimeError(
+        "Configuration Error! The Mixpanel token is not set. Please set it in your bot integration configuration."
+      );
+    }
+    const token = ctx.configuration.token;
+
+    try {
+      // basic auth, username is token, password is empty
+      await axios.post(
+        "https://api.mixpanel.com/import",
+        {
+          // bad payload on purpose, we don't want to track anything
+        },
+        {
+          auth: {
+            username: token,
+            password: "",
+          },
+        }
+      ); 
+    } catch (error:any ) {
+      // if the error isn't an axios error, throw it
+      if (!error.response) {
+        throw new bpclient.RuntimeError(
+          "Configuration Error! Unknown error."
+        );
+      }
+
+      // if error code is 401, it means the token is incorrect
+      if (error.response.status === 401) {
+        throw new bpclient.RuntimeError(
+          "Configuration Error! The Mixpanel token is incorrect."
+        );
+      }
+      // otherwise we are good!
+    }
   },
-  unregister: async () => {
-  },
+  unregister: async () => {},
   actions: {
     updateUserProfile: async (args): Promise<updateUserProfileOutput> => {
       args.logger.forBot().info('Updating User Profile', args.input.userProfile)
