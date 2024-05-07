@@ -24,8 +24,7 @@ export default new IntegrationDefinition({
       },
       output: {
         schema: z.object({
-          success: z.boolean().describe('Whether the user profile was successfully updated'),
-          log: z.string().describe('Log message'),
+         
         })
       },
     },    
@@ -41,8 +40,7 @@ export default new IntegrationDefinition({
       },
       output: {
         schema: z.object({
-          success: z.boolean().describe('Whether the event was successfully tracked'),
-          log: z.string().describe('Log message'),
+         
         })
       },
     },

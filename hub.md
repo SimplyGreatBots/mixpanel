@@ -18,12 +18,10 @@ These actions are backed by the Mixpanel Analytics API, utilizing a write key to
 - **Update User Profile**
   - Updates identifying information of a user's profile in Mixpanel Analytics.
   - Inputs: User ID, User Profile (optional JSON string of user metadata)
-  - Outputs: Success status, Log message
 
 - **Track Event**
   - Tracks a custom event and associated properties in Mixpanel Analytics.
   - Inputs: User ID, Event Name, Event Payload (optional JSON string of event properties)
-  - Outputs: Success status, Log message
 
 ### Configuration
 
