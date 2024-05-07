@@ -1,9 +1,8 @@
 import { IntegrationDefinition, z } from '@botpress/sdk'
-import { name, integrationName } from './package.json'
 
 export default new IntegrationDefinition({
-  name: integrationName ?? name,
-  title: 'Mixpanel',
+  name: 'plus/mixpanel',
+  title: "Mixpanel",
   description: 'Integrate Mixpanel with Botpress',
   icon: 'logo.svg',
   version: '0.2.2',
