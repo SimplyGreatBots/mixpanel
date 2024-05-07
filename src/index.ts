@@ -1,6 +1,6 @@
 import * as botpress from '.botpress'
 import axios from 'axios'
-import * as mixpanelClient from 'mixpanel';
+import Mixpanel from 'mixpanel';
 
 type updateUserProfileOutput = botpress.actions.updateUserProfile.output.Output
 type trackEventOutput = botpress.actions.trackEvent.output.Output
@@ -52,8 +52,7 @@ export default new botpress.Integration({
     },
     trackEvent: async (args): Promise<trackEventOutput> => {
       args.logger.forBot().info('Tracking data for event:', args.input.eventName)
-      
-      const Mixpanel = require('mixpanel')
+    
       const mixpanel = Mixpanel.init(args.ctx.configuration.token)
 
       let eventPayload = {}
@@ -71,7 +70,7 @@ export default new botpress.Integration({
         await new Promise((resolve, reject) => {
           mixpanel.track(args.input.eventName, {
           distinct_id: args.input.userId,
-          properties: eventPayload,
+          ...eventPayload,
           }, (err: Error) => {
             if (err) {
               args.logger.forBot().error('Failed to track event in Mixpanel', err)
