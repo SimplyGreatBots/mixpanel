@@ -3,9 +3,6 @@ import axios from 'axios'
 import Mixpanel from 'mixpanel';
 import * as bpclient from "@botpress/client";
 
-type updateUserProfileOutput = botpress.actions.updateUserProfile.output.Output
-type trackEventOutput = botpress.actions.trackEvent.output.Output
-
 export default new botpress.Integration({
   register: async ({ ctx }) => {
     if (!ctx.configuration.token) {
@@ -48,7 +45,7 @@ export default new botpress.Integration({
   },
   unregister: async () => {},
   actions: {
-    updateUserProfile: async (args): Promise<updateUserProfileOutput> => {
+    updateUserProfile: async (args) => {
       args.logger.forBot().info('Updating User Profile', args.input.userProfile)
       
       let traits = {};
@@ -82,12 +79,12 @@ export default new botpress.Integration({
         })
         .catch(function (error) {
           args.logger.forBot().error(error);
-          return { success: false, log: `${error}` } 
+          return {} 
         })
 
       return { success: true, log: 'User profile updated successfully' }
     },
-    trackEvent: async (args): Promise<trackEventOutput> => {
+    trackEvent: async (args) => {
       args.logger.forBot().info('Tracking data for event:', args.input.eventName)
     
       const mixpanel = Mixpanel.init(args.ctx.configuration.token)
@@ -100,7 +97,7 @@ export default new botpress.Integration({
         }
       } catch (error) {
         args.logger.forBot().error('Invalid JSON as eventPayload. Must be a JSON string', error)
-        return { success: false, log: 'Invalid JSON as eventPayload. Must be a JSON string'}
+        return {}
       }
     
       try {
@@ -108,7 +105,7 @@ export default new botpress.Integration({
           mixpanel.track(args.input.eventName, {
           distinct_id: args.input.userId,
           ...eventPayload,
-          }, (err: Error) => {
+          }, (err) => {
             if (err) {
               args.logger.forBot().error('Failed to track event in Mixpanel', err)
               reject(err)
@@ -119,10 +116,10 @@ export default new botpress.Integration({
         })
       } catch (error) {
         args.logger.forBot().error('Error during Mixpanel track operation', error)
-        return { success: false, log: 'Error during Mixpanel track operation' }
+        return {}
       }
     
-      return { success: true, log: 'Event tracked successfully' }
+      return {}
     }
   }
   ,
